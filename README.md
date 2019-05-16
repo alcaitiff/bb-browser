@@ -5,7 +5,7 @@ Para isso, foi necessário chamar o `/sbin/init` no momento do boot do container
 
 ## Podman vs Docker
 
-Fazer um container docker executar systemd exige algumas adaptações:
+Para executar o systemd em um container docker é necessário algumas adaptações:
 
 https://developers.redhat.com/blog/2014/05/05/running-systemd-within-docker-container/
 
@@ -34,7 +34,7 @@ Configurar o ambiente:
 // tentei executar esse comando automaticamente junto
 // com o login mas o warsaw não funciona
 
-source /start.sh
+source ~/setup.sh
 ```
 
 Chamar o browser:

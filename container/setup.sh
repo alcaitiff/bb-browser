@@ -21,39 +21,12 @@ get_xauth_host() {
   fi
 }
 
-prepare() {
+setup() {
   get_xauth_host
   firefox -CreateProfile default
   sudo dpkg -i /warsaw_setup64.deb
   sudo /usr/local/bin/warsaw/core
-  /usr/local/bin/warsaw/core
 }
 
-run() {
-  prepare
-  firefox $1
-}
-
-
-case ${1} in
-  itau)
-    run "http://www.itau.com.br"
-  ;;
-  bb)
-    run "https://www2.bancobrasil.com.br/aapf/login.jsp?aapf.IDH=sim&perfil=1"
-  ;;
-  bbpj)
-    run "https://aapj.bb.com.br/aapj/loginpfe.bb"
-  ;;
-  cef)
-    run "https://internetbanking.caixa.gov.br/sinbc/#!nb/login"
-  ;;
-  sobre|about|ajuda|help)
-    run "https://github.com/lichti/containers4docker/tree/master/warsaw-browser"
-  ;;
-  *)
-    prepare
-  ;;
-esac
-
+setup
 

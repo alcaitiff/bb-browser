@@ -49,16 +49,15 @@ RUN wget "http://ftp.br.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t
 ADD https://cloud.gastecnologia.com.br/bb/downloads/ws/warsaw_setup64.deb /warsaw_setup64.deb
 
 RUN sed -i "s/exit 101/exit 0/g" /usr/sbin/policy-rc.d
-#RUN echo "source /start.sh" >> /home/bank/.profile
+#RUN echo "source /home/bank/setup.sh" >> /home/bank/.profile
 
-COPY start.sh /start.sh
-RUN chmod 755 /start.sh \
-    && ln -s /start.sh /usr/local/bin/start.sh
+COPY setup.sh /home/bank/setup.sh
+RUN chmod 755 /home/bank/setup.sh
 
 ARG HOSTNAME
 ARG DISPLAY
 
-RUN sed -i "s/#HOSTNAME#/$HOSTNAME/g" /start.sh
-RUN sed -i "s/#DISPLAY#/$DISPLAY/g" /start.sh
+RUN sed -i "s/#HOSTNAME#/$HOSTNAME/g" /home/bank/setup.sh
+RUN sed -i "s/#DISPLAY#/$DISPLAY/g" /home/bank/setup.sh
 
 CMD ["/sbin/init"]
