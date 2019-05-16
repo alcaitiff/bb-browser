@@ -34,7 +34,7 @@ Configurar o ambiente:
 // tentei executar esse comando automaticamente junto
 // com o login mas o warsaw não funciona
 
-/start.sh
+source /start.sh
 ```
 
 Chamar o browser:
