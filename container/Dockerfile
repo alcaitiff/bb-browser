@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM ubuntu:18.04
 LABEL maintainer "Maxiwell S. Garcia <maxiwell@gmail.com>"
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -6,7 +6,6 @@ RUN apt update \
   && apt install -qqy \
   systemd \
   dbus \
-  initscripts \
   systemd-sysv \
   vim \
   wget \
@@ -31,7 +30,7 @@ RUN apt update \
   zenity \
   libgtk2.0-0 \
   locales locales-all \
-  firefox-esr \
+  firefox \
   --no-install-recommends \
   && apt clean \
   && rm -rf /var/lib/apt/lists/* \
