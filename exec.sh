@@ -1,6 +1,5 @@
 #!/bin/bash
 
-sudo xhost +
 sudo podman run --privileged -it --shm-size=2g --rm \
     -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
     -v $HOME/Downloads:/home/bank/Downloads \
