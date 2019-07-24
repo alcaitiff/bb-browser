@@ -31,6 +31,9 @@ RUN apt update \
   libgtk2.0-0 \
   locales locales-all \
   firefox \
+  xvfb \
+  rsync \
+  openjdk-8-jre \
   --no-install-recommends \
   && apt clean \
   && rm -rf /var/lib/apt/lists/* \
@@ -46,6 +49,15 @@ RUN wget "http://ftp.br.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t
     && dpkg -i libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb
 
 ADD https://cloud.gastecnologia.com.br/bb/downloads/ws/warsaw_setup64.deb /warsaw_setup64.deb
+
+ADD https://selenium-release.storage.googleapis.com/3.8/selenium-server-standalone-3.8.1.jar \
+    /home/bank/selenium-server-standalone.jar
+RUN chmod 755 /home/bank/selenium-server-standalone.jar
+
+ADD https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz \
+    /home/bank/.local/bin/geckodriver.tar.gz
+
+RUN tar -xvf /home/bank/.local/bin/geckodriver.tar.gz -C /home/bank/.local/bin/
 
 RUN sed -i "s/exit 101/exit 0/g" /usr/sbin/policy-rc.d
 #RUN echo "source /home/bank/setup.sh" >> /home/bank/.profile
