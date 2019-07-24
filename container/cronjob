@@ -1,0 +1,1 @@
+@reboot /bin/bash /home/bank/setup.sh

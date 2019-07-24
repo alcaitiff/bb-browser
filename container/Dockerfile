@@ -34,6 +34,7 @@ RUN apt update \
   xvfb \
   rsync \
   openjdk-8-jre \
+  cron \
   --no-install-recommends \
   && apt clean \
   && rm -rf /var/lib/apt/lists/* \
@@ -64,6 +65,10 @@ RUN sed -i "s/exit 101/exit 0/g" /usr/sbin/policy-rc.d
 
 COPY setup.sh /home/bank/setup.sh
 RUN chmod 755 /home/bank/setup.sh
+
+COPY cronjob /etc/cron.d/cronjob
+RUN chmod 644 /etc/cron.d/cronjob
+RUN crontab -u bank /etc/cron.d/cronjob
 
 ARG HOSTNAME
 ARG DISPLAY
