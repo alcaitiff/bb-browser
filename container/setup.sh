@@ -14,7 +14,7 @@ get_xauth_host() {
     then
       [ -f ${XAUTHORITY} ] || touch ${XAUTHORITY}
       xauth add ${HOSTNAME}/${DISPLAY} . \
-      $(xauth -f /tmp/.docker.xauth list | grep $HOST_HOSTNAME | awk '{ print $NF }')
+      $(xauth -f /tmp/.docker.xauth list | grep ${HOST_HOSTNAME}/${DISPLAY} | awk '{ print $NF }')
     else
       cp /tmp/.docker.xauth ${XAUTHORITY}
     fi
