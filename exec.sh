@@ -1,9 +1,13 @@
 #!/bin/bash
 
 sudo xhost +
-sudo podman run --privileged -it --shm-size=2g --rm \
+sudo podman run --privileged=true -it --shm-size=2g --rm \
+	-v /etc/localtime:/etc/localtime:ro \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -v $HOME/Downloads:/home/bank/Downloads \
+    -e "DISPLAY=unix${DISPLAY}" \
+    -v "${HOME}/Downloads:/home/bank/Downloads:Z" \
+    -v "${XAUTHORITY}:/tmp/.docker.xauth:ro"  \
     -v /dev/shm:/dev/shm \
-    -v ${XAUTHORITY}:/tmp/.docker.xauth:ro  \
-    --name warsaw-browser maxiwell/warsaw-browser
+    -v /etc/hosts:/etc/hosts \
+    --net host \
+    --name bb bb-browser

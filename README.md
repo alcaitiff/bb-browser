@@ -1,7 +1,7 @@
-# Warsaw Browser
+# BB Browser
 
-As últimas versões do warsaw exige a presença do systemd para executar.
-Para isso, foi necessário chamar o `/sbin/init` no momento do boot do container.
+O warsaw exige a presença do systemd para executar.
+Para isso é necessário chamar o `/sbin/init` no momento do boot do container.
 
 ## Podman vs Docker
 
@@ -13,35 +13,39 @@ Então usei o `podman`, conforme o próprio artigo da redhat sugere:
 
 https://developers.redhat.com/blog/2019/04/24/how-to-run-systemd-in-a-container/
 
-# Build e Execução
+## Build e Execução
 
 É necessário ter `podman` instalado antes de executar os passos abaixo.
 
-## Para construir o container
+### Podman
+
+```bash
+. /etc/os-release
+sudo sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
+wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_${VERSION_ID}/Release.key -O- | sudo apt-key add -
+sudo apt-get update -qq
+sudo apt-get -qq -y install podman
 ```
+
+O pacote .deb pode ser encontrado em https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/amd64/podman_1.8.0~7_amd64.deb
+
+
+## Para construir o container
+
+```bash
 ./build.sh
 ```
 
 ## Como executar o container
-```
+
+```bash
 ./exec.sh
 ```
 
 Fazer login com o usuário `bank`
 
-Configurar o ambiente:
-```
-// tentei executar esse comando automaticamente junto
-// com o login mas o warsaw não funciona
-
-source ~/setup.sh
-```
-
 Chamar o browser:
+
+```bash
+bb
 ```
-firefox
-```
-
-
-
-

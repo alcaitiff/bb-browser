@@ -2,9 +2,7 @@
 #set -eo pipefail
 
 export LANG="pt_BR.UTF-8"
-
-export HOST_HOSTNAME=#HOSTNAME#
-export DISPLAY=unix#DISPLAY#
+export DISPLAY=:1
 export XAUTHORITY=/home/bank/.Xauthority
 
 get_xauth_host() {
@@ -14,19 +12,16 @@ get_xauth_host() {
     then
       [ -f ${XAUTHORITY} ] || touch ${XAUTHORITY}
       xauth add ${HOSTNAME}/${DISPLAY} . \
-      $(xauth -f /tmp/.docker.xauth list | grep $HOST_HOSTNAME | awk '{ print $NF }')
+      $(xauth -f /tmp/.docker.xauth list | grep ${HOST_HOSTNAME}/unix${DISPLAY} | awk '{ print $NF }')
     else
       cp /tmp/.docker.xauth ${XAUTHORITY}
     fi
   fi
 }
 
-setup() {
-  get_xauth_host
-  firefox -CreateProfile default
-  sudo dpkg -i /warsaw_setup64.deb
-  sudo /usr/local/bin/warsaw/core
-}
-
-setup
+get_xauth_host
+firefox -CreateProfile default
+sudo dpkg -i /warsaw_setup64.deb
+sudo /usr/local/bin/warsaw/core
+sudo systemctl start warsaw.service
 

@@ -1,14 +1,12 @@
-FROM debian:stable-slim
-LABEL maintainer "Maxiwell S. Garcia <maxiwell@gmail.com>"
+FROM ubuntu:18.04
+LABEL maintainer "Alan Rabello <alcaitiff@gmail.com>"
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt update \
   && apt install -qqy \
   systemd \
   dbus \
-  initscripts \
   systemd-sysv \
-  vim \
   wget \
   python3 \
   x11-utils \
@@ -31,7 +29,7 @@ RUN apt update \
   zenity \
   libgtk2.0-0 \
   locales locales-all \
-  firefox-esr \
+  firefox \
   --no-install-recommends \
   && apt clean \
   && rm -rf /var/lib/apt/lists/* \
@@ -43,21 +41,21 @@ RUN apt update \
   && chmod 0440 /etc/sudoers \
   && passwd -d bank
 
-RUN wget "http://ftp.br.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb" \
-    && dpkg -i libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb
+ADD libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb /libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb
 
-ADD https://cloud.gastecnologia.com.br/bb/downloads/ws/warsaw_setup64.deb /warsaw_setup64.deb
+RUN dpkg -i libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb
+
+ADD warsaw_setup64.deb /warsaw_setup64.deb
 
 RUN sed -i "s/exit 101/exit 0/g" /usr/sbin/policy-rc.d
-#RUN echo "source /home/bank/setup.sh" >> /home/bank/.profile
 
-COPY setup.sh /home/bank/setup.sh
-RUN chmod 755 /home/bank/setup.sh
+COPY setup.sh /home/bank/s.sh
+RUN chmod 755 /home/bank/s.sh
 
-ARG HOSTNAME
-ARG DISPLAY
+COPY bb.sh /home/bank/bb.sh
+RUN chmod 755 /home/bank/bb.sh
 
-RUN sed -i "s/#HOSTNAME#/$HOSTNAME/g" /home/bank/setup.sh
-RUN sed -i "s/#DISPLAY#/$DISPLAY/g" /home/bank/setup.sh
+RUN echo "alias s=/home/bank/s.sh" >> /home/bank/.profile
+RUN echo "alias bb=/home/bank/bb.sh" >> /home/bank/.profile
 
 CMD ["/sbin/init"]
