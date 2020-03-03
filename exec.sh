@@ -6,7 +6,7 @@ sudo podman run --privileged=true -it --shm-size=2g --rm \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -e "DISPLAY=unix${DISPLAY}" \
     -v "${HOME}/Downloads:/home/bank/Downloads:Z" \
-    -v "${XAUTHORITY}:/tmp/.docker.xauth:ro"  \
+    -v "${XAUTHORITY}:/tmp/.docker.xauth"  \
     -v /dev/shm:/dev/shm \
     -v /etc/hosts:/etc/hosts \
     --net host \

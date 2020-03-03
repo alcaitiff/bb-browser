@@ -47,5 +47,6 @@ Fazer login com o usuário `bank`
 Chamar o browser:
 
 ```bash
+# bb abre o navegador
 bb
 ```

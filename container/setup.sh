@@ -21,7 +21,10 @@ get_xauth_host() {
 
 get_xauth_host
 firefox -CreateProfile default
+sleep 2
 sudo dpkg -i /warsaw_setup64.deb
 sudo /usr/local/bin/warsaw/core
+sleep 2
 sudo systemctl start warsaw.service
+sleep 2
 
